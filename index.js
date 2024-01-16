@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -21,6 +22,29 @@ app.use(cors({
 app.use(cookieParser());
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
+
+// CORS HEADERS
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'https://blog-app-frontend-8s02.onrender.com'
+  ];
+
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+  if (req.method === "OPTIONS") {
+    console.log('CORS preflight request');
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 // ROUTES
 app.use("/auth", authRoutes);
