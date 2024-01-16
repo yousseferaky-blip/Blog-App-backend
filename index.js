@@ -2,12 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const userRoute = require("./routes/User");
 const postRoute = require("./routes/Post");
 const commentRoute = require("./routes/Comment");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const path = require("path");
 
 // MIDDLEWARES
@@ -29,17 +29,17 @@ app.use((req, res, next) => {
     'http://localhost:3000',
     'https://blog-app-frontend-smoky.vercel.app'
   ];
-  
+
   const origin = req.headers.origin;
 
   if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+    res.header("Access-Control-Allow-Origin", origin);
   }
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
+    console.log('CORS preflight request');
     res.sendStatus(200);
   } else {
     next();
@@ -66,7 +66,5 @@ mongoose.connect(process.env.MONGO__URL, {
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  console.log(`Port is running in port ${port}`);
+  console.log(`Port is running on port ${port}`);
 });
-
-  
