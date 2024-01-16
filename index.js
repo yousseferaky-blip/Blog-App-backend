@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    // 'https://blog-app-frontend-swxy.onrender.com'
+    'https://blog-app-frontend-smoky.vercel.app'
   ],
   credentials: true,
 }));
